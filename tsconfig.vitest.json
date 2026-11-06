@@ -6,7 +6,8 @@
   "include": [
     "src/**/*.test.*",
     "env.d.ts",
-    "src/components/HelloWorld.test.ts"
+    "src/components/HelloWorld.test.ts",
+    "src/components/work-in-progress.ts"
   ],
   "exclude": [],
 
