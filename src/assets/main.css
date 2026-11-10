@@ -15,8 +15,27 @@ body,
   --theme-accent2: #b4ffe6;
 
   --color-text: var(--theme-fg);
+  --color-text-muted: color-mix(in srgb, var(--theme-fg) 50%, var(--theme-bg));
+
   --color-stroke: var(--theme-fg);
+  --color-stroke-muted: color-mix(
+    in srgb,
+    var(--theme-fg) 50%,
+    var(--theme-bg)
+  );
+
   --color-background: var(--theme-bg);
+  --color-background-hover: color-mix(
+    in srgb,
+    var(--theme-fg) 10%,
+    var(--theme-bg)
+  );
+  --color-background-press: color-mix(
+    in srgb,
+    var(--theme-fg) 20%,
+    var(--theme-bg)
+  );
+
   --color-accent1: var(--theme-accent1);
   --color-accent2: var(--theme-accent2);
 }
