@@ -34,25 +34,20 @@ const getNextEngine = (current: string, direction = 1) => {
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed } from "vue"
 
 import { useUserConfigStore } from "@/stores/user-config"
 
-import IconButton from "./icon-button.vue"
 import SvgIcon, { type SvgIconProps } from "./icons/svg-icon.vue"
+import InputSearch from "./input-search.vue"
 import VisuallyHidden from "./visually-hidden.vue"
 
 const userConfig = useUserConfigStore()
 
-const inputRef = ref<HTMLInputElement>()
-const query = ref("")
-
-const handleSubmit = () => {
-  if (!query.value) return
-
+const handleSubmit = (value: string) => {
   const { engine, forwards } = userConfig.search
   const queryUrl =
-    getForwardingUrl(query.value, forwards) ?? getEngineUrl(query.value, engine)
+    getForwardingUrl(value, forwards) ?? getEngineUrl(value, engine)
   window.location.href = encodeURI(queryUrl)
 }
 
@@ -71,7 +66,7 @@ const iconName = computed(() => icons[userConfig.search.engine] ?? "search")
 </script>
 
 <template>
-  <div class="input-search">
+  <div class="search-bar">
     <button
       v-if="iconName !== 'search'"
       class="cycle-engine"
@@ -86,36 +81,16 @@ const iconName = computed(() => icons[userConfig.search.engine] ?? "search")
       <SvgIcon :name="iconName" size="2.5rem" />
     </button>
 
-    <form @submit.prevent="handleSubmit" autocomplete="off">
-      <input
-        v-model="query"
-        ref="inputRef"
-        type="search"
-        name="query"
-        autofocus
-        :placeholder="userConfig.search.placeholder"
-      />
-
-      <IconButton
-        v-if="query.length"
-        type="reset"
-        icon="circle-x"
-        label="Clear search"
-        @click="(query = '') || inputRef?.focus()"
-      />
-
-      <IconButton
-        v-if="query.length"
-        type="submit"
-        icon="search"
-        label="Submit search"
-      />
-    </form>
+    <InputSearch
+      autofocus
+      :placeholder="userConfig.search.placeholder"
+      @submit="handleSubmit"
+    />
   </div>
 </template>
 
 <style scoped>
-.input-search {
+.search-bar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,56 +127,6 @@ button.cycle-engine {
     top: 3rem;
     left: 50%;
     transform: translateX(-50%);
-  }
-}
-
-form {
-  width: 100%;
-  position: relative;
-}
-
-form button {
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 3rem;
-    inset: -0.5rem 0;
-  }
-
-  position: absolute;
-  &[type="reset"] {
-    right: 2rem;
-    top: 0.5rem;
-  }
-  &[type="submit"] {
-    right: 0rem;
-    top: 0.5rem;
-  }
-}
-
-input {
-  width: 100%;
-  border-bottom: 2px solid var(--color-stroke);
-  height: 3rem;
-  font-size: 2rem;
-  padding-right: 4rem;
-
-  color: var(--color-text);
-  background: transparent;
-
-  &::placeholder {
-    color: var(--color-text-muted);
-  }
-
-  &:not(:hover, :focus-visible) {
-    border-color: var(--color-stroke-muted);
-  }
-
-  &:focus-visible {
-    border-color: var(--color-accent1);
-    outline: none;
   }
 }
 </style>
