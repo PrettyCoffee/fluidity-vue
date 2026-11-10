@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WorkInProgress from "../components/work-in-progress.vue"
+import { WorkInProgress } from "@/components"
 </script>
 
 <template>

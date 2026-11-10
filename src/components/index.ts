@@ -1,0 +1,5 @@
+export { default as SearchBar } from "./search-bar.vue"
+export { default as IconButton, type IconButtonProps } from "./icon-button.vue"
+export { default as SvgIcon, type SvgIconProps } from "./icons/svg-icon.vue"
+export { default as VisuallyHidden } from "./visually-hidden.vue"
+export { default as WorkInProgress } from "./work-in-progress.vue"
